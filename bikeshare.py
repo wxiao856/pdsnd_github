@@ -9,6 +9,15 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
+def get_user_input(prompt, valid_options):
+    """Handles input validation for user choices."""
+    while True:
+        user_input = input(prompt).lower()
+        if user_input in valid_options:
+            return user_input
+        else:
+            print("Invalid input. Please enter a valid option.")
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -20,29 +29,13 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    while True:
-        city = input("Would you like to see data for Chicago, New York City, or Washington?\n").lower()
-        if city in CITY_DATA:
-            break
-        else:
-            print("Invalid input. Please enter a valid city name.")
-
+    city = get_user_input("Would you like to see data for Chicago, New York City, or Washington?\n", CITY_DATA.keys())
 
     # TO DO: get user input for month (all, january, february, ... , june)
-    while True:
-        month = input("Which month? (all, january, february, march, april, may, june)\n").lower()
-        if month in ['all', 'january', 'february', 'march', 'april', 'may', 'june']:
-            break
-        else:
-            print("Invalid input. Please enter a valid month name.")
+    month = get_user_input("Which month? (all, january, february, march, april, may, june)\n", ['all', 'january', 'february', 'march', 'april', 'may', 'june'])
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-    while True:
-        day = input("Which day? (all, monday, tuesday, wednesday, thursday, friday, saturday, sunday)\n").lower()
-        if day in ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
-            break
-        else:
-            print("Invalid input. Please enter a valid day of the week.")
+    day = get_user_input("Which day? (all, monday, tuesday, wednesday, thursday, friday, saturday, sunday)\n", ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])
 
     print('-'*40)
     return city, month, day
@@ -184,9 +177,9 @@ def display_data(df):
     """ Displays 5 rows of data at a time upon user request."""
     start_loc = 0
     view_data = input('Would you like to view the first 5 rows of the data? Enter yes or no.\n')
-    while view_data.lower() == 'yes':
-        print(df.head(5))
-        df = df.iloc[5:]  # Update df to the next 5 rows
+    while view_data.lower() == 'yes' and start_loc < len(df):
+        print(df.iloc[start_loc:start_loc + 5])
+        start_loc += 5
         view_data = input('Do you wish to continue? Enter yes or no.\n')
 
 def main():
