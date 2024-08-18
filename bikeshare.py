@@ -174,9 +174,9 @@ def display_data(df):
     """ Displays 5 rows of data at a time upon user request."""
     start_loc = 0
     view_data = input('Would you like to view the first 5 rows of the data? Enter yes or no.\n')
-    while view_data.lower() == 'yes':
-        print(df.head(5))
-        df = df.iloc[5:]  # Update df to the next 5 rows
+    while view_data.lower() == 'yes' and start_loc < len(df):
+        print(df.iloc[start_loc:start_loc + 5])
+        start_loc += 5
         view_data = input('Do you wish to continue? Enter yes or no.\n')
 
 def main():
